@@ -60,7 +60,7 @@ enum Input_State {INPUT_INIT, GET_INPUT} input_state;
 void Input_Init()
 {
 	DDRA = 0xF0; PORTA = 0x0F;				//Enable the keypad
-	input_state = INIT;
+	input_state = INPUT_INIT;
 }
 
 void Input_Tick()
