@@ -49,59 +49,241 @@ void SPI_MasterTransmit ( unsigned char cData) {
 	SetBit(PORTB,1,4);
 }
 
-int main(void) 
-{ 
-	//For Master
-	
-	DDRA = 0xF0; PORTA = 0x0F;
-	DDRC = 0xFF; PORTC = 0x00; // LCD data lines
-	DDRD = 0xFF; PORTD = 0x00; // LCD control lines
+unsigned char Ptrn;
+unsigned char Spd;
+unsigned char uC;
+unsigned char data;
 
+//----------Input Tick----------
+enum Input_State {INPUT_INIT, GET_INPUT} input_state;
+
+void Input_Init()
+{
+	DDRA = 0xF0; PORTA = 0x0F;				//Enable the keypad
+	input_state = INIT;
+}
+
+void Input_Tick()
+{
+	static unsigned char press;
+	static unsigned char pressed;
+	//Actions
+	switch (input_state)
+	{
+		case INPUT_INIT:
+			Ptrn = 0x01;
+			Spd = 0x01;
+			uC = 0x01;
+			data = 0x11;
+			press = 0x00;
+			pressed = 0x00;
+			break;
+
+		case GET_INPUT:
+			press = GetKeypadKey();
+			if (pressed != press)
+			{
+				pressed = press;
+
+				if (press == 'A')			//A
+					Ptrn = 0x01;
+				else if (press == 'B')		//B
+					Ptrn = 0x02;
+				else if (press == 'C')		//C
+					Ptrn = 0x03;
+				else if (press == 'D')		//D
+					Ptrn = 0x04;
+				else if (press == '1')		//1
+					Spd = 0x01;
+				else if (press == '2')		//2
+					Spd = 0x02;
+				else if (press == '3')		//3
+					Spd = 0x03;
+				else if (press == '4')		//4
+					Spd = 0x04;
+				else if (press == '5')		//5
+					Spd = 0x05;
+				else if (press == '6')		//6
+					Spd = 0x06;
+				else if (press == '1')		//7
+					uC = 0x01;
+				else if (press == '1')		//8
+					uC = 0x02;
+				else if (press == '1')		//9
+					uC = 0x03;
+
+				data = (Ptrn << 4) | Spd;	//Update data
+			}
+			break;
+
+		default:
+
+			break;
+	}
+	//Transitions
+	switch (input_state)
+	{
+		case INPUT_INIT:
+			input_state = GET_INPUT;
+			break;
+		case GET_INPUT:
+
+			break;
+		default:
+			input_state = INPUT_INIT;
+			break;
+	}
+}
+
+//----------Display Tick----------
+enum Display_State {DISPLAY_INIT, DISPLAY} display_state;
+
+void Display_Init()
+{
+	DDRC = 0xFF; PORTC = 0x00;				// LCD data lines
+	DDRD = 0xFF; PORTD = 0x00; 				// LCD control lines
 	// Initializes the LCD display
 	LCD_init();
-	// Starting at position 1 on the LCD screen, writes Hello World
-	LCD_DisplayString(1, "Hello World");
-	delay_ms(1000);
-	LCD_ClearScreen();
-	unsigned char press = 0x00;
-	unsigned char string[5];
-	string[0] = 'H';
-	string[1] = 'i';
-	string[2] = ':';
-	string[3] = ' ';
-	string[4] = 0x00;
 
-	SPI_MasterInit();
+	display_state = DISPLAY_INIT;
+}
 
-	while(1){
-		//SPI_MasterTransmit(0x0F);
-		press = GetKeypadKey();
-		if (press != string[3])
-		{
-			if (press == '1')
-				SPI_MasterTransmit(0x01);
-			else if (press == '2')
-				SPI_MasterTransmit(0x02);
-			else if (press == '3')
-				SPI_MasterTransmit(0x04);
-			else if (press == '4')
-				SPI_MasterTransmit(0x08);
-			else if (press == '5')
-				SPI_MasterTransmit(0x10);
-			else if (press == '6')
-				SPI_MasterTransmit(0x20);
-			else if (press == '7')
-				SPI_MasterTransmit(0x40);
-			else if (press == '8')
-				SPI_MasterTransmit(0x80);
-			else
-				SPI_MasterTransmit(0x00);
+void Display_Tick()
+{
+	static unsigned char* string;
+	static unsigned char display_Ptrn;
+	static unsigned char display_Spd;
+	static unsigned char display_uC;
+	//Actions
+	switch (display_state)
+	{
+		case DISPLAY_INIT:
+			//Clean the screen
+			LCD_ClearScreen();
 
-			string[3] = press;
-			LCD_DisplayString(1,string);
-		}
-		delay_ms(1000);
+			string = " Ptrn: _ Spd: _  uC: _          ";
+			display_Ptrn = 0x01;
+			display_Spd = 0x01;
+			display_uC = 0x01;
+			string[7] = display_Ptrn + '0';
+			string[14] = display_Spd + '0';
+			string[21] = display_uC + '0';
+
+			LCD_DisplayString(1, string);
+			break;
+
+		case DISPLAY:
+			if (display_Ptrn != Ptrn || display_Spd != Spd || display_uC != uC)
+			{
+				display_Ptrn = Ptrn;
+				display_Spd = Spd;
+				display_uC = uC;
+				string[7] = display_Ptrn + '0';
+				string[14] = display_Spd + '0';
+				string[21] = display_uC + '0';
+
+				LCD_DisplayString(1, string);
+			}
+			break;
+
+		default:
+
+			break;
 	}
+
+	//Transitions
+	switch (display_state)
+	{
+		case DISPLAY_INIT:
+			display_state = DISPLAY;
+			break;
+
+		case DISPLAY:
+
+			break;
+
+		default:
+			display_state = DISPLAY_INIT;
+			break;
+	}
+}
+
+//----------SPI Master Tick----------
+enum MasterState {MASTER_INIT, MASTER_TRANSMIT} master_state;
+
+void Master_Init()
+{
+	SPI_MasterInit();						//Init SPI
+	master_state = MASTER_INIT;
+}
+
+void Master_Tick()
+{
+	static unsigned char sent_data;
+	//Actions
+	switch (master_state)
+	{
+		case MASTER_INIT:
+			sent_data = 0x00;
+			break;
+
+		case MASTER_TRANSMIT:
+			if (sent_data != data)
+			{
+				sent_data = data;
+				SPI_MasterTransmit(sent_data);
+			}
+			break;
+
+		default:
+
+			break;
+	}
+
+	//Transitions
+	switch (master_state)
+	{
+		case MASTER_INIT:
+			master_state = MASTER_TRANSMIT;
+			break;
+
+		case MASTER_TRANSMIT:
+
+			break;
+
+		default:
+			master_state = MASTER_INIT;
+			break;
+	}
+}
+
+//----------Master System Task----------
+void MasterSystemTask()
+{
+	Input_Init();
+	Display_Init();
+	Master_Init();
+	for (;;)
+	{
+		Input_Tick();
+		Display_Tick();
+		Master_Tick();
+		vTaskDelay(100);
+	}
+}
+
+void StartMasterSystemPulse(unsigned portBASE_TYPE Priority)
+{
+	xTaskCreate(MasterSystemTask, (signed portCHAR *)"MasterSystemTask", configMINIMAL_STACK_SIZE, NULL, Priority, NULL );
+}
+
+//Master System Main
+int main(void) 
+{ 
+	//Start Tasks  
+	StartMasterSystemPulse(1);
+	//RunSchedular 
+	vTaskStartScheduler(); 
 	
 	return 0; 
 }
