@@ -77,7 +77,7 @@ ISR(SPI_STC_vect) { // this is enabled in with the SPCR register’s “SP I
 int main(void) 
 { 
 	//For Master
-	
+	/*
 	DDRA = 0xF0; PORTA = 0x0F;
 	DDRC = 0xFF; PORTC = 0x00; // LCD data lines
 	DDRD = 0xFF; PORTD = 0x00; // LCD control lines
@@ -127,9 +127,9 @@ int main(void)
 		}
 		delay_ms(1000);
 	}
-	
+	*/
 	//For Servant
-	/*
+	
 	DDRC = 0xFF; PORTC = 0x00;
 	
 	SPI_ServantInit();
@@ -138,6 +138,6 @@ int main(void)
 	while(1){
 		PORTC = receivedData;
 	}
-	*/
+	
    return 0; 
 }

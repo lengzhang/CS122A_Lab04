@@ -24,13 +24,13 @@
 //For SPI Master
 void SPI_MasterInit()
 {
-	//Set DDRB to have MOSI, SCK, and SS as output and MISO as input
-	//Set SPCR register to enable SPI, enable master, and use sck frequency
+	// Set DDRB to have MOSI, SCK, and SS as output and MISO as input
+	// Set SPCR register to enable SPI, enable master, and use sck frequency
 	// of fosc/16 (pg. 168)
 	// Make sure global interrupts are enabled on SREG register (pg. 9 )
 
-	/* Set MOSI and SCK output, all others input */
-	DDRB = 0xB0;
+	/* Set SS, MOSI and SCK output, all others input */
+	DDRB = (1<<DDRB4) | (1<<DDRB5) | (1<<DDRB7);
 	/* Enable SPI, Master, set clock rate fck/16 */
 	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);
 	sei();
@@ -105,11 +105,11 @@ void Input_Tick()
 					Spd = 0x05;
 				else if (press == '6')		//6
 					Spd = 0x06;
-				else if (press == '1')		//7
+				else if (press == '7')		//7
 					uC = 0x01;
-				else if (press == '1')		//8
+				else if (press == '8')		//8
 					uC = 0x02;
-				else if (press == '1')		//9
+				else if (press == '9')		//9
 					uC = 0x03;
 
 				data = (Ptrn << 4) | Spd;	//Update data
@@ -283,7 +283,7 @@ int main(void)
 	//Start Tasks  
 	StartMasterSystemPulse(1);
 	//RunSchedular 
-	vTaskStartScheduler(); 
-	
+	vTaskStartScheduler();
+
 	return 0; 
 }
