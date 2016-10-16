@@ -366,7 +366,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0xe48
+.text           0x00000000      0xe4e
  *(.vectors)
  .vectors       0x00000000       0x8c C:/Users/user/Documents/Software/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega1284/avr51/crtatmega1284.o
                 0x00000000                __vector_default
@@ -482,76 +482,76 @@ END GROUP
                 0x000001fa       0x4c list.o
                 0x000001fa                vListRemove
  .text.SPI_ServantInit
-                0x00000246        0xc main.o
+                0x00000246       0x12 main.o
                 0x00000246                SPI_ServantInit
  .text.__vector_19
-                0x00000252       0x1e main.o
-                0x00000252                __vector_19
+                0x00000258       0x1e main.o
+                0x00000258                __vector_19
  .text.Check_Tick
-                0x00000270       0x66 main.o
-                0x00000270                Check_Tick
+                0x00000276       0x66 main.o
+                0x00000276                Check_Tick
  .text.Display_Tick
-                0x000002d6      0x182 main.o
-                0x000002d6                Display_Tick
+                0x000002dc      0x182 main.o
+                0x000002dc                Display_Tick
  .text.CheckTask
-                0x00000458       0x12 main.o
-                0x00000458                CheckTask
+                0x0000045e       0x12 main.o
+                0x0000045e                CheckTask
  .text.StartSlaveSystemPulse
-                0x0000046a       0x3e main.o
-                0x0000046a                StartSlaveSystemPulse
- .text.main     0x000004a8       0x12 main.o
-                0x000004a8                main
+                0x00000470       0x3e main.o
+                0x00000470                StartSlaveSystemPulse
+ .text.main     0x000004ae       0x12 main.o
+                0x000004ae                main
  .text.pxPortInitialiseStack
-                0x000004ba       0xd8 port.o
-                0x000004ba                pxPortInitialiseStack
+                0x000004c0       0xd8 port.o
+                0x000004c0                pxPortInitialiseStack
  .text.xPortStartScheduler
-                0x00000592       0x74 port.o
-                0x00000592                xPortStartScheduler
+                0x00000598       0x74 port.o
+                0x00000598                xPortStartScheduler
  .text.vPortYield
-                0x00000606       0xb0 port.o
-                0x00000606                vPortYield
+                0x0000060c       0xb0 port.o
+                0x0000060c                vPortYield
  .text.vPortYieldFromTick
-                0x000006b6       0xb2 port.o
-                0x000006b6                vPortYieldFromTick
+                0x000006bc       0xb2 port.o
+                0x000006bc                vPortYieldFromTick
  .text.__vector_13
-                0x00000768        0x4 port.o
-                0x00000768                __vector_13
+                0x0000076e        0x4 port.o
+                0x0000076e                __vector_13
  .text.prvAddCurrentTaskToDelayedList
-                0x0000076c       0x6a tasks.o
+                0x00000772       0x6a tasks.o
  .text.xTaskGenericCreate
-                0x000007d6      0x1e6 tasks.o
-                0x000007d6                xTaskGenericCreate
+                0x000007dc      0x1e6 tasks.o
+                0x000007dc                xTaskGenericCreate
  .text.vTaskStartScheduler
-                0x000009bc       0x52 tasks.o
-                0x000009bc                vTaskStartScheduler
+                0x000009c2       0x52 tasks.o
+                0x000009c2                vTaskStartScheduler
  .text.vTaskSuspendAll
-                0x00000a0e        0xc tasks.o
-                0x00000a0e                vTaskSuspendAll
+                0x00000a14        0xc tasks.o
+                0x00000a14                vTaskSuspendAll
  .text.vTaskIncrementTick
-                0x00000a1a      0x182 tasks.o
-                0x00000a1a                vTaskIncrementTick
+                0x00000a20      0x182 tasks.o
+                0x00000a20                vTaskIncrementTick
  .text.xTaskResumeAll
-                0x00000b9c      0x102 tasks.o
-                0x00000b9c                xTaskResumeAll
+                0x00000ba2      0x102 tasks.o
+                0x00000ba2                xTaskResumeAll
  .text.vTaskDelay
-                0x00000c9e       0x36 tasks.o
-                0x00000c9e                vTaskDelay
+                0x00000ca4       0x36 tasks.o
+                0x00000ca4                vTaskDelay
  .text.prvIdleTask
-                0x00000cd4       0x6c tasks.o
+                0x00000cda       0x6c tasks.o
  .text.vTaskSwitchContext
-                0x00000d40       0xd8 tasks.o
-                0x00000d40                vTaskSwitchContext
+                0x00000d46       0xd8 tasks.o
+                0x00000d46                vTaskSwitchContext
  .text.avr-libc
-                0x00000e18        0xe c:/users/user/documents/software/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libc.a(memset.o)
-                0x00000e18                memset
+                0x00000e1e        0xe c:/users/user/documents/software/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libc.a(memset.o)
+                0x00000e1e                memset
  .text.avr-libc
-                0x00000e26       0x1e c:/users/user/documents/software/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libc.a(strncpy.o)
-                0x00000e26                strncpy
-                0x00000e44                . = ALIGN (0x2)
+                0x00000e2c       0x1e c:/users/user/documents/software/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libc.a(strncpy.o)
+                0x00000e2c                strncpy
+                0x00000e4a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000e44        0x0 c:/users/user/documents/software/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
-                0x00000e44                _exit
-                0x00000e44                exit
+ .fini9         0x00000e4a        0x0 c:/users/user/documents/software/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
+                0x00000e4a                _exit
+                0x00000e4a                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -570,11 +570,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000e44        0x4 c:/users/user/documents/software/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x00000e4a        0x4 c:/users/user/documents/software/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000e48                _etext = .
+                0x00000e4e                _etext = .
 
-.data           0x00800100       0x18 load address 0x00000e48
+.data           0x00800100       0x18 load address 0x00000e4e
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -659,8 +659,8 @@ END GROUP
                 0x0080075a                check_state
                 0x0080075b                speed
                 0x0080075c                PROVIDE (__bss_end, .)
-                0x00000e48                __data_load_start = LOADADDR (.data)
-                0x00000e60                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000e4e                __data_load_start = LOADADDR (.data)
+                0x00000e66                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080075c        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -769,14 +769,14 @@ END GROUP
  .debug_abbrev  0x00000b40      0x154 port.o
  .debug_abbrev  0x00000c94      0x303 tasks.o
 
-.debug_line     0x00000000     0x1591
+.debug_line     0x00000000     0x1597
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x169 C:/Users/user/Documents/Software/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega1284/avr51/crtatmega1284.o
  .debug_line    0x00000169      0x18a heap_1.o
  .debug_line    0x000002f3      0x216 list.o
- .debug_line    0x00000509      0x448 main.o
- .debug_line    0x00000951      0x33f port.o
- .debug_line    0x00000c90      0x901 tasks.o
+ .debug_line    0x00000509      0x44e main.o
+ .debug_line    0x00000957      0x33f port.o
+ .debug_line    0x00000c96      0x901 tasks.o
 
 .debug_frame    0x00000000      0x498
  *(.debug_frame)

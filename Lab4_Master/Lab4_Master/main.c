@@ -25,28 +25,56 @@
 void SPI_MasterInit()
 {
 	// Set DDRB to have MOSI, SCK, and SS as output and MISO as input
+	DDRB = 0xBF;
+	PORTB = 0x40;
 	// Set SPCR register to enable SPI, enable master, and use sck frequency
 	// of fosc/16 (pg. 168)
+	SPCR = (1<<SPE) | (1<<MSTR) | (1<<SPR0);
 	// Make sure global interrupts are enabled on SREG register (pg. 9 )
-
-	/* Set SS, MOSI and SCK output, all others input */
-	DDRB = (1<<DDRB4) | (1<<DDRB5) | (1<<DDRB7);
-	/* Enable SPI, Master, set clock rate fck/16 */
-	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);
-	sei();
+	//sei();
+	SREG = 0x80;
 }
 
-void SPI_MasterTransmit ( unsigned char cData) {
+void SPI_MasterTransmit_One (unsigned char cData) {
+	// set SS_1 low
+	SetBit(PORTB,4,0);
 	// data in SPDR will be transmitted, e.g. SPDR = cData ;
 	SPDR = cData;
-	// set SS low
-	SetBit(PORTB,0,4);
+
 	//Start transmission
 	while (!( SPSR & (1<< SPIF ))) { // wait for transmission to complete
 		;
 	}
 	// set SS high
-	SetBit(PORTB,1,4);
+	SetBit(PORTB,4,1);
+}
+
+void SPI_MasterTransmit_Two (unsigned char cData) {
+	// set SS_2 low
+	SetBit(PORTB,3,0);
+	// data in SPDR will be transmitted, e.g. SPDR = cData ;
+	SPDR = cData;
+
+	//Start transmission
+	while (!( SPSR & (1<< SPIF ))) { // wait for transmission to complete
+		;
+	}
+	// set SS high
+	SetBit(PORTB,3,1);
+}
+
+void SPI_MasterTransmit_Three (unsigned char cData) {
+	// set SS_3 low
+	SetBit(PORTB,2,0);
+	// data in SPDR will be transmitted, e.g. SPDR = cData ;
+	SPDR = cData;
+
+	//Start transmission
+	while (!( SPSR & (1<< SPIF ))) { // wait for transmission to complete
+		;
+	}
+	// set SS high
+	SetBit(PORTB,2,1);
 }
 
 unsigned char Ptrn;
@@ -231,7 +259,18 @@ void Master_Tick()
 			if (sent_data != data)
 			{
 				sent_data = data;
-				SPI_MasterTransmit(sent_data);
+				if (uC == 0x01)
+				{
+					SPI_MasterTransmit_One(sent_data);
+				}
+				else if (uC == 0x02)
+				{
+					SPI_MasterTransmit_Two(sent_data);
+				}
+				else if (uC == 0x03)
+				{
+					SPI_MasterTransmit_Three(sent_data);
+				}
 			}
 			break;
 
